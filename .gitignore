@@ -1,0 +1,4 @@
+*.swo
+*.swp
+.ash_history
+__pycache__
