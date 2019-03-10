@@ -10,25 +10,11 @@ RUN apt-get update -y \
 	postgresql-client \
 	sqlite3
 
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+	&& apt-get install -y nodejs \
+	&& npm -g install js-beautify
+
 RUN curl https://beyondgrep.com/ack-2.24-single-file > /usr/local/bin/ack && chmod 0755 /usr/local/bin/ack
-
-WORKDIR /src
-
-ARG UID=1000
-ARG GID=1000
-ARG USER=dev
-
-RUN mkdir -p /home/$USER
-RUN groupadd -r -g $GID $USER
-RUN useradd -r -u $UID -d /home/$USER -g $USER $USER
-
-COPY vimrc /home/$USER/.vimrc
-RUN chown -R $USER:$USER /home/$USER
-
-USER $USER
-
-RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-RUN vim +PluginInstall +qall
 
 RUN pip3 install --no-cache-dir --upgrade pip \
 	autopep8 \
@@ -37,4 +23,25 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 	pytest-cov \
 	pytest-django
 
-ENV PATH "$PATH:/home/$USER/.local/bin"
+ARG UID=1000
+ARG GID=1000
+ARG USER=dev
+
+WORKDIR /home/$USER
+
+RUN groupadd -r -g $GID $USER
+RUN useradd -r -u $UID -d /home/$USER -g $USER $USER
+RUN chown -R $USER:$USER /home/$USER
+
+WORKDIR /opt/dev
+COPY vimrc .
+RUN chown -R $USER:$USER /opt/dev
+USER $USER
+
+ENV VIMINIT ":source /opt/dev/vimrc"
+ENV MYVIMRTP /opt/dev/.vim
+ENV MYVIMRC /opt/dev/vimrc
+RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
+RUN vim +PluginInstall +qall
+
+WORKDIR /src

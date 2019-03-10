@@ -4,8 +4,9 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set rtp=$MYVIMRTP,$VIMRUNTIME
+set rtp+=$MYVIMRTP/bundle/Vundle.vim
+call vundle#begin('$MYVIMRTP/bundle/')
 
 Plugin 'VundleVim/Vundle.vim'
 
@@ -14,6 +15,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'mileszs/ack.vim'
+Plugin 'Chiel92/vim-autoformat'
 
 call vundle#end()
 " filetype plugin indent on
@@ -305,8 +307,10 @@ nmap <leader>b <plug>GitGutterPrevHunk
 " syntax color complex things like @{${"foo"}}
 " let perl_extended_vars = 1
 
-au FileType python setlocal formatprg=autopep8\ -
-au Filetype python nnoremap ,t :let t = winsaveview()<CR>:%!autopep8 -<CR>:w<CR>:call winrestview(t)<CR>
+" au FileType python setlocal formatprg=autopep8\ -
+" au Filetype python nnoremap ,t :let t = winsaveview()<CR>:%!autopep8 -<CR>:w<CR>:call winrestview(t)<CR>
+
+noremap <leader>t :Autoformat<CR>
 
 set pastetoggle=<F2>
 " nnoremap <F3> mf :%!perltidy -q<Enter> :%!podtidy -v<Enter> `fzz
