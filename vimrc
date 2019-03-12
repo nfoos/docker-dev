@@ -4,18 +4,19 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp=$MYVIMRTP,$VIMRUNTIME
+set rtp=$MYVIMRTP,$VIMRUNTIME,$MYVIMRTP/after
 set rtp+=$MYVIMRTP/bundle/Vundle.vim
 call vundle#begin('$MYVIMRTP/bundle/')
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'mileszs/ack.vim'
 Plugin 'Chiel92/vim-autoformat'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat.git'
 
 call vundle#end()
 " filetype plugin indent on
@@ -57,12 +58,6 @@ call vundle#end()
 " ,f - next git gutter hunk
 " ,b - previous git gutter hunk
 
-" System clipboard
-" ================
-" ,d - cut to clipboard
-" ,y - copy to clipboard
-" ,p - paste from clipboard
-
 " NERD Tree
 " =========
 " ,nt - toggle NERDTree
@@ -70,41 +65,30 @@ call vundle#end()
 " NERD Commenter
 " ==============
 " ,c  - toggle comment
-" ,cc - double comment left align
+" ,lc - left comment
 " ,uc - uncomment
-
-" Tagbar
-" ======
-" ,tb - toggle tagbar
 
 " Fugitive
 " ========
 " ,gb - :Gblame
 " ,gs - :Gstatus
 
-" ,t - perltidy
+" Autoformat
+" ==========
+" ,t - format file
 
-" ,ln - toggle line number
-" ,ic - toggle ignorecase
+" Toggle Options
+" ==============
+" ,n - toggle line number
 
 " <F2>  - toggle paste
-" <F3>  - perltidy, podtidy
-" <F4>  - perl -c, perlcritic, podchecker
-" <F5>  - execute perl
-" <F6>  - prove
-" <F9>  - perldoc
-" <F12> - toggle mouse
 
 " ,rc - edit this file in new tab
 
 "=========================================
-" source ~/.vim/functions.vim
-
-" Pathogen
-" execute pathogen#infect()
+source $MYVIMRTP/functions.vim
 
 filetype plugin indent on
-"filetype plugin on
 
 scriptencoding utf-8
 set encoding=utf-8
@@ -129,9 +113,6 @@ set hlsearch
 set ignorecase
 set smartcase
 
-" magic search
-" nnoremap / /\v
-
 " syntax highlighting
 set bg=light
 syntax on
@@ -147,30 +128,20 @@ set wildmode=longest,list,full
 set wildmenu
 set wildignorecase
 
-" autoindent
-autocmd FileType perl,python set autoindent|set smartindent
-inoremap # X<BS>#
-
 " 4 space tabs
-set tabstop=4|set shiftwidth=4|set softtabstop=4
-autocmd FileType python set expandtab
+set tabstop=4
 
 " show matching brackets
-autocmd FileType perl,python set showmatch
+set showmatch
 highlight MatchParen cterm=bold ctermbg=none ctermfg=green
 
 " show line numbers
-autocmd FileType perl,python set number
-
-" check perl code with :make
-" autocmd FileType perl set makeprg=perl\ -Ilib\ -c\ %\ $*
-" autocmd FileType perl set errorformat=%f:%l:%m
-" autocmd FileType perl set autowrite
+set number
 
 " detect .t files as perl
-" autocmd! BufNewFile,BufRead *.t set ft=perl
+autocmd! BufNewFile,BufRead *.t set ft=perl
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 autocmd! BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\" zz" |
@@ -181,6 +152,18 @@ autocmd! BufReadPost COMMIT_EDITMSG
 
 "Remember info about open buffers on close
 set viminfo^=%
+
+set pastetoggle=<F2>
+
+" Show trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd! InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd! InsertLeave * match ExtraWhitespace /\s\+$/
+
+highlight clear SignColumn
+
+let mapleader = ","
+let g:mapleader = ","
 
 " disable arrow keys
 map <up> <nop>
@@ -195,17 +178,12 @@ imap <right> <nop>
 
 imap jj <Esc>
 
-let mapleader = ","
-let g:mapleader = ","
-
 " toggle options
-" MapToggle <leader>ln number
-" MapToggle <leader>ic ignorecase
-" MapToggle <leader>ro readonly
+MapToggle <leader>n number
 
 " edit and reload this file
 nnoremap <leader>rc :tabe $MYVIMRC<CR>
-autocmd! bufwritepost .vimrc source $MYVIMRC
+autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 
 " Treat long lines as break lines (useful when moving around in them)
 nmap j gj
@@ -266,11 +244,6 @@ nnoremap <backspace> hx
 " Enter newline
 nmap <enter> i<cr><esc>
 
-" Clipboard
-" xmap <silent> <leader>d d: call system("xclip -i -selection clipboard", getreg("\""))<CR>
-" xmap <silent> <leader>y y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
-" nmap <silent> <leader>p :call setreg("\"",system("xclip -o -selection clipboard"))<CR>gP
-
 " Fugitive
 nmap <leader>gb :Gblame<CR>
 nmap <leader>gs :Gstatus<CR>
@@ -278,17 +251,16 @@ nmap <leader>gs :Gstatus<CR>
 " NERD Tree
 " open NERDTree if no file specified
 autocmd! vimenter * if !argc() | NERDTree | only | endif
-" toggle NERDTRee
-map <leader>nt :NERDTreeToggle<CR>
-" Close NERDTree if it is the last window
-" autocmd! bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.swp$']
+let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.pyc$', '__pycache__']
+" toggle NERDTRee
+" nmap <leader>nt :NERDTreeToggle<CR>
 
-" NERD commenter options/mappings
-let NERDCreateDefaultMappings=0
-let NERDCommentWholeLinesInVMode=1
-let NERDTreeMapQuit='Q'
+" NERD Commenter
+let g:NERDSpaceDelims = 1
+let g:NERDCreateDefaultMappings=0
+let g:NERDCommentWholeLinesInVMode=1
+let g:NERDTreeMapQuit='Q'
 
 map <leader>c  <plug>NERDCommenterToggle
 map <leader>lc <plug>NERDCommenterAlignLeft
@@ -297,37 +269,7 @@ map <leader>uc <plug>NERDCommenterUncomment
 " GitGutter mapping
 nmap <leader>f <plug>GitGutterNextHunk
 nmap <leader>b <plug>GitGutterPrevHunk
+nmap <leader>g :GitGutterBufferToggle<CR>
 
-" xmllint
-" nmap <silent> <leader>xml mf :%!xmllint --format --recover - 2>/dev/null<Enter> `fzz
-
-" my perl includes pod
-" let perl_include_pod = 1
-
-" syntax color complex things like @{${"foo"}}
-" let perl_extended_vars = 1
-
-" au FileType python setlocal formatprg=autopep8\ -
-" au Filetype python nnoremap ,t :let t = winsaveview()<CR>:%!autopep8 -<CR>:w<CR>:call winrestview(t)<CR>
-
-noremap <leader>t :Autoformat<CR>
-
-set pastetoggle=<F2>
-" nnoremap <F3> mf :%!perltidy -q<Enter> :%!podtidy -v<Enter> `fzz
-" imap <F3> <esc><F3>
-" xmap <leader>t :!perltidy -q<Enter>
-" nmap <F4> :!reset;perl -Ilib -c %; perlcritic %; podchecker %<CR>
-" imap <F4> <esc><F4>
-
-" nmap <F5> :!reset;perl -Ilib %<CR>
-" imap <F5> <esc><F5>
-
-" nmap <F9> :!perldoc %<CR>
-" imap <F9> <esc><F9>
-
-" Show trailing whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd! InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd! InsertLeave * match ExtraWhitespace /\s\+$/
-
-highlight clear SignColumn
+" Auto formatting
+nmap <leader>t :Autoformat<CR>
