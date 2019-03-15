@@ -128,6 +128,10 @@ set wildmode=longest,list,full
 set wildmenu
 set wildignorecase
 
+" show tab characters
+set list
+set listchars=tab:·\ 
+
 " 4 space tabs
 set tabstop=4
 
@@ -252,7 +256,7 @@ nmap <leader>gs :Gstatus<CR>
 " open NERDTree if no file specified
 autocmd! vimenter * if !argc() | NERDTree | only | endif
 let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.pyc$', '__pycache__']
+let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__']
 " toggle NERDTRee
 " nmap <leader>nt :NERDTreeToggle<CR>
 
