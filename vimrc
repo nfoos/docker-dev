@@ -256,7 +256,7 @@ nmap <leader>gs :Gstatus<CR>
 " open NERDTree if no file specified
 autocmd! vimenter * if !argc() | NERDTree | only | endif
 let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__']
+let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__', 'node_modules']
 " toggle NERDTRee
 " nmap <leader>nt :NERDTreeToggle<CR>
 
