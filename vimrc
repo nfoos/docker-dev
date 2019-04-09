@@ -277,3 +277,4 @@ nmap <leader>g :GitGutterBufferToggle<CR>
 
 " Auto formatting
 nmap <leader>t :Autoformat<CR>
+let g:formatters_ruby = ['prettier', 'rbeautify', 'rubocop']
