@@ -13,10 +13,15 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mileszs/ack.vim'
+Plugin 'ngmy/vim-rubocop'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-repeat'
+Plugin 'vim-perl/vim-perl'
+Plugin 'vim-ruby/vim-ruby'
+
+" Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
 " filetype plugin indent on
@@ -77,6 +82,10 @@ call vundle#end()
 " ==========
 " ,t - format file
 
+" RuboCop
+" =======
+" ,ru - run rubocop
+
 " Toggle Options
 " ==============
 " ,n - toggle line number
@@ -92,10 +101,6 @@ filetype plugin indent on
 
 scriptencoding utf-8
 set encoding=utf-8
-
-"tab complete filenames
-set wildmode=longest,list,full
-set wildmenu
 
 " display status line
 set laststatus=2
@@ -137,13 +142,10 @@ set tabstop=4
 
 " show matching brackets
 set showmatch
-highlight MatchParen cterm=bold ctermbg=none ctermfg=green
+highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " show line numbers
 set number
-
-" detect .t files as perl
-autocmd! BufNewFile,BufRead *.t set ft=perl
 
 " Return to last edit position when opening files
 autocmd! BufReadPost *
@@ -154,7 +156,7 @@ autocmd! BufReadPost *
 autocmd! BufReadPost COMMIT_EDITMSG
   \ exe "normal! gg"
 
-"Remember info about open buffers on close
+" Remember info about open buffers on close
 set viminfo^=%
 
 set pastetoggle=<F2>
@@ -196,8 +198,8 @@ nmap k gk
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
 
 " Adjust window size
 map <C-Up>    :resize +5<CR>
@@ -276,5 +278,10 @@ nmap <leader>b <plug>GitGutterPrevHunk
 nmap <leader>g :GitGutterBufferToggle<CR>
 
 " Auto formatting
-nmap <leader>t :Autoformat<CR>
-let g:formatters_ruby = ['prettier', 'rbeautify', 'rubocop']
+noremap <leader>t :Autoformat<CR>
+let g:formatters_ruby = ['prettier', 'rubocop', 'rbeautify']
+let g:formatdef_perltidy = '"perltidy -pro=/opt/dev/perltidyrc -q "'
+let g:formatdef_rubocop = "'rubocop --auto-correct -c /opt/dev/rubocop.yml -o /dev/null -s '.bufname('%').' | sed -n 2,\$p'"
+
+" Vim RuboCop
+let g:vimrubocop_config = '/opt/dev/rubocop.yml'

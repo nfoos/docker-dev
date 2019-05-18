@@ -1,7 +1,17 @@
 ## Docker Dev Environment
 
 Build
-`docker build -f Dockerfile.python --build-arg uid=$UID --build-arg gid=$UID --build-arg usr=$USER -t pydev .`
+`docker build --build-arg UID=$UID --build-arg GID=$UID -t docker-dev .`
 
 Run
-`docker run -it --rm --net="host" -v $PWD:/src -v home:/home/dev pydev`
+```
+dev()
+{
+    if [[ $(docker ps -qf "name=docker-dev") ]];
+    then
+      docker exec -it -w ${PWD#$HOME} docker-dev /bin/ash --login
+    else
+      docker run -it --rm -d --net="host" -h docker-dev -v ~/src:/src -v home:/home/dev -w ${PWD#$HOME} --name docker-dev docker-dev && dev
+    fi
+}
+```
