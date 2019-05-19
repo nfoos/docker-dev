@@ -32,7 +32,7 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 RUN set -ex && \
 	apk add --no-cache --virtual .build-deps libc-dev gcc make ruby-dev && \
-	gem install etc json rubocop:'0.65.0' rubocop-rspec --no-document && \
+	gem install etc json htmlbeautifier rubocop:'0.65.0' rubocop-rspec --no-document && \
 	apk del --no-cache .build-deps
 
 ARG UID=1000

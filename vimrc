@@ -17,6 +17,7 @@ Plugin 'ngmy/vim-rubocop'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-perl/vim-perl'
 Plugin 'vim-ruby/vim-ruby'
@@ -279,7 +280,10 @@ nmap <leader>g :GitGutterBufferToggle<CR>
 
 " Auto formatting
 noremap <leader>t :Autoformat<CR>
+let g:formatters_eruby = ['htmlbeautifier']
 let g:formatters_ruby = ['prettier', 'rubocop', 'rbeautify']
+
+let g:formatdef_htmlbeautifier = '"htmlbeautifier -b1"'
 let g:formatdef_perltidy = '"perltidy -pro=/opt/dev/perltidyrc -q "'
 let g:formatdef_rubocop = "'rubocop --auto-correct -c /opt/dev/rubocop.yml -o /dev/null -s '.bufname('%').' | sed -n 2,\$p'"
 
