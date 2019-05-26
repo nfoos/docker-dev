@@ -49,7 +49,8 @@ RUN set -ex && \
 
 
 WORKDIR /opt/dev
-COPY perltidyrc rubocop.yml vimrc ./
+COPY gitconfig gitignore perltidyrc rubocop.yml vimrc ./
+COPY git-hooks git-hooks/
 COPY vim vim/
 RUN chown -R $USER:$USER /opt/dev
 USER $USER

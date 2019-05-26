@@ -1,0 +1,4 @@
+[core]
+        editor = vim
+        excludesfile = /opt/dev/gitignore
+        hookspath = /opt/dev/git-hooks
