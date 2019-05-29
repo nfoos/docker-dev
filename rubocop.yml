@@ -1,0 +1,32 @@
+AllCops:
+  Exclude:
+    - "bin/**/*"
+    - "db/**/*"
+    - "script/**/*"
+    - "spec/**/*"
+    - "vendor/**/*"
+  TargetRubyVersion: 2.4
+
+Lint/UnneededCopDisableDirective:
+  Enabled: No
+
+Style/IfUnlessModifier:
+  Enabled: No
+
+Style/Documentation:
+  Enabled: No
+
+Style/FrozenStringLiteralComment:
+  Enabled: No
+
+Style/SymbolArray:
+  Enabled: No
+
+Style/WordArray:
+  Enabled: No
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 40

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+# Remove the "# Please enter the commit message..." help message.
+/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+
+# Insert ticket to bottom of commit message
+if [[ -z $COMMIT_SOURCE ]]; then
+   BRANCH=$(git symbolic-ref --short HEAD)
+   TICKET=$(echo $BRANCH | grep -Eo '\w+-\d+')
+   if [[ -n $TICKET ]]; then
+      perl -pi -e "s/^/\n\n$TICKET/ if $.==1" $COMMIT_MSG_FILE
+   fi
+fi
