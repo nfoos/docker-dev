@@ -109,6 +109,10 @@ set laststatus=2
 " use visual bell instead of beeping
 set vb
 
+" display column ruler
+set colorcolumn=100
+highlight ColorColumn ctermbg=0
+
 " incremental search
 set incsearch
 
