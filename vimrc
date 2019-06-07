@@ -255,6 +255,10 @@ nnoremap <backspace> hx
 " Enter newline
 nmap <enter> i<cr><esc>
 
+" Ack
+" ignore specific directories in rails apps
+nnoremap <leader>ra :Ack! --ignore-dir=log --ignore-dir=coverage --ignore-dir=tmp<space>
+
 " Fugitive
 nmap <leader>gb :Gblame<CR>
 nmap <leader>gs :Gstatus<CR>
