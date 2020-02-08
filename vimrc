@@ -21,6 +21,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-perl/vim-perl'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'elixir-editors/vim-elixir'
 
 " Plugin 'vim-airline/vim-airline'
 
@@ -110,6 +111,7 @@ set laststatus=2
 set vb
 
 " display column ruler
+set textwidth=120
 set colorcolumn=100
 highlight ColorColumn ctermbg=0
 
@@ -190,7 +192,7 @@ imap <right> <nop>
 imap jj <Esc>
 
 " toggle options
-MapToggle <leader>n number
+MapToggle <leader>nu number
 
 " edit and reload this file
 nnoremap <leader>rc :tabe $MYVIMRC<CR>
@@ -226,11 +228,11 @@ map <C-h> :tabprevious<CR>
 map <C-l> :tabnext<CR>
 imap <C-h> <esc>:tabprevious<CR>
 imap <C-l> <esc>:tabnext<CR>
+map <leader>tn :tabnew<space>
 
 " dont use Q for Ex mode
 nnoremap Q :q
 nnoremap q :q
-nnoremap wq :wq
 
 vnoremap . :normal .<CR>
 
@@ -269,7 +271,7 @@ autocmd! vimenter * if !argc() | NERDTree | only | endif
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__', 'node_modules']
 " toggle NERDTRee
-" nmap <leader>nt :NERDTreeToggle<CR>
+nmap <leader>nt :NERDTreeToggle<CR>
 
 " NERD Commenter
 let g:NERDSpaceDelims = 1
@@ -277,17 +279,17 @@ let g:NERDCreateDefaultMappings=0
 let g:NERDCommentWholeLinesInVMode=1
 let g:NERDTreeMapQuit='Q'
 
-map <leader>c  <plug>NERDCommenterToggle
+map <leader>cc  <plug>NERDCommenterToggle
 map <leader>lc <plug>NERDCommenterAlignLeft
 map <leader>uc <plug>NERDCommenterUncomment
 
 " GitGutter mapping
 nmap <leader>f <plug>GitGutterNextHunk
 nmap <leader>b <plug>GitGutterPrevHunk
-nmap <leader>g :GitGutterBufferToggle<CR>
+nmap <leader>gg :GitGutterBufferToggle<CR>
 
 " Auto formatting
-noremap <leader>t :Autoformat<CR>
+noremap <leader>tt :Autoformat<CR>
 let g:formatters_eruby = ['htmlbeautifier']
 let g:formatters_ruby = ['prettier', 'rubocop', 'rbeautify']
 

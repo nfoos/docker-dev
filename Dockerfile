@@ -6,8 +6,10 @@ RUN set -ex && \
 	apk add --no-cache \
 		ack \
 		git \
+		nodejs \
 		python3 \
 		ruby \
+		elixir \
 		vim
 
 # postgresql-client, sqlite3
