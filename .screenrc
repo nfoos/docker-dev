@@ -1,0 +1,2 @@
+hardstatus alwayslastline "%{= kw}%-Lw%{= BW}%n%f %t%{-}%+Lw %-= @%H - %LD %d %LM - %c"
+defscrollback 10000
