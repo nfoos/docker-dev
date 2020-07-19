@@ -16,21 +16,22 @@ RUN set -ex && \
 
 RUN set -ex && \
 	apk add --no-cache --virtual .build-deps nodejs-npm && \
+	npm -g install live-server && \
 	npm -g install js-beautify && \
 	npm -g install prettier @prettier/plugin-ruby && \
 	apk del --no-cache .build-deps
 
-RUN set -ex && \
-	apk add --no-cache --virtual .build-deps wget make perl-app-cpanminus && \
-	cpanm -n Perl::Tidy && \
-	apk del --no-cache .build-deps
+# RUN set -ex && \
+#     apk add --no-cache --virtual .build-deps wget make perl-app-cpanminus && \
+#     cpanm -n Perl::Tidy && \
+#     apk del --no-cache .build-deps
 
-RUN pip3 install --no-cache-dir --upgrade pip \
-	autopep8 \
-	httpie \
-	pytest \
-	pytest-cov \
-	pytest-django
+# RUN pip3 install --no-cache-dir --upgrade pip \
+#     autopep8 \
+#     httpie \
+#     pytest \
+#     pytest-cov \
+#     pytest-django
 
 RUN set -ex && \
 	apk add --no-cache --virtual .build-deps libc-dev gcc make ruby-dev && \

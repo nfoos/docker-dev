@@ -19,11 +19,11 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
-Plugin 'vim-perl/vim-perl'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'elixir-editors/vim-elixir'
 
 " Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-perl/vim-perl'
 
 call vundle#end()
 " filetype plugin indent on
@@ -36,34 +36,16 @@ call vundle#end()
 "
 " see :h vundle for more details or wiki for FAQ
 
-" Move text up/down
-" =================
-" <Alt-k> - up
-" <Alt-j> - down
-
-" Navigate windows
-" ================
-" <Ctrl-k> - up
-" <Ctrl-j> - down
-" <Ctrl-h> - left
-" <Ctrl-l> - right
-
-" Adjust window size
-" ==================
-" <C-Up>    - increase height
-" <C-Down>  - decrease height
-" <C-Right> - increase width
-" <C-Left>  - decrease width
-
 " Navigate tabs
 " =============
-" <Alt-h> - previous
-" <Alt-l> - next
+" <Ctrl-h> - previous
+" <Ctrl-l> - next
 
-" Navigate page
+" GitGutter
 " =============
 " ,f - next git gutter hunk
 " ,b - previous git gutter hunk
+" ,gg - toggle gutter
 
 " NERD Tree
 " =========
@@ -71,7 +53,7 @@ call vundle#end()
 
 " NERD Commenter
 " ==============
-" ,c  - toggle comment
+" ,cc  - toggle comment
 " ,lc - left comment
 " ,uc - uncomment
 
@@ -82,7 +64,7 @@ call vundle#end()
 
 " Autoformat
 " ==========
-" ,t - format file
+" ,tt - format file
 
 " RuboCop
 " =======
@@ -90,9 +72,8 @@ call vundle#end()
 
 " Toggle Options
 " ==============
-" ,n - toggle line number
-
-" <F2>  - toggle paste
+" ,nu - toggle line number
+" ,p - toggle paste
 
 " ,rc - edit this file in new tab
 
@@ -166,7 +147,8 @@ autocmd! BufReadPost COMMIT_EDITMSG
 " Remember info about open buffers on close
 set viminfo^=%
 
-set pastetoggle=<F2>
+" custom tabline
+set tabline=%!MyTabLine()
 
 " Show trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -193,6 +175,7 @@ imap jj <Esc>
 
 " toggle options
 MapToggle <leader>nu number
+MapToggle <leader>p paste
 
 " edit and reload this file
 nnoremap <leader>rc :tabe $MYVIMRC<CR>
@@ -203,31 +186,42 @@ nmap j gj
 nmap k gk
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
 " map <C-h> <C-W>h
 " map <C-l> <C-W>l
 
 " Adjust window size
-map <C-Up>    :resize +5<CR>
-map <C-Down>  :resize -5<CR>
-map <C-Right> :vertical resize +5<CR>
-map <C-Left>  :vertical resize -5<CR>
+" map <C-Up>    :resize +5<CR>
+" map <C-Down>  :resize -5<CR>
+" map <C-Right> :vertical resize +5<CR>
+" map <C-Left>  :vertical resize -5<CR>
 
 " Somehow this allows Alt mappings
-let c='a'
-while c <= 'z'
-  exec "set <A-".c.">=\e".c
-  exec "imap \e".c." <A-".c.">"
-  let c = nr2char(1+char2nr(c))
-endw
-set timeout ttimeoutlen=50
+" let c='a'
+" while c <= 'z'
+"   exec "set <A-".c.">=\e".c
+"   exec "imap \e".c." <A-".c.">"
+"   let c = nr2char(1+char2nr(c))
+" endw
+" set timeout ttimeoutlen=50
 
 " Tab navigation
-map <C-h> :tabprevious<CR>
-map <C-l> :tabnext<CR>
-imap <C-h> <esc>:tabprevious<CR>
-imap <C-l> <esc>:tabnext<CR>
+" map <C-h> :tabprevious<CR>
+" map <C-l> :tabnext<CR>
+" imap <C-h> <esc>:tabprevious<CR>
+" imap <C-l> <esc>:tabnext<CR>
+nnoremap H gT
+nnoremap L gt
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
 map <leader>tn :tabnew<space>
 
 " dont use Q for Ex mode
@@ -236,26 +230,30 @@ nnoremap q :q
 
 vnoremap . :normal .<CR>
 
+" retain visual selection after indenting
+vnoremap > >gv
+vnoremap < <gv
+
 " make tab in v mode ident code
-xmap <tab> >gv
-xmap <s-tab> <gv
+" xmap <tab> >gv
+" xmap <s-tab> <gv
 
 " make space indent code
-xmap <space> :s/^/ /gi<Enter>:let @/ = "TODO"<Enter> gv
-xmap <backspace> :s/^\s//gi<Enter>:let @/ = "TODO"<Enter> gv
+" xmap <space> :s/^/ /gi<Enter>:let @/ = "TODO"<Enter> gv
+" xmap <backspace> :s/^\s//gi<Enter>:let @/ = "TODO"<Enter> gv
 
 " make tab in normal mode ident code
-nmap <tab> i<tab><esc>
-nmap <s-tab> ^i<bs><esc>
+" nmap <tab> i<tab><esc>
+" nmap <s-tab> ^i<bs><esc>
 
 " make space in normal mode insert space
-nnoremap <space> i<space><esc>l
+" nnoremap <space> i<space><esc>l
 
 " make backspace in normal mode delete
-nnoremap <backspace> hx
+" nnoremap <backspace> hx
 
 " Enter newline
-nmap <enter> i<cr><esc>
+" nmap <enter> i<cr><esc>
 
 " Ack
 " ignore specific directories in rails apps
@@ -269,23 +267,24 @@ nmap <leader>gs :Gstatus<CR>
 " open NERDTree if no file specified
 autocmd! vimenter * if !argc() | NERDTree | only | endif
 let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__', 'node_modules']
+let NERDTreeIgnore = ['\.git', '\.swo$', '\.swp$', '\.ipython', '\.pyc$', '\.pytest_cache', '__pycache__', 'node_modules', '_build', 'deps']
+let g:NERDTreeMapQuit='Q'
 " toggle NERDTRee
 nmap <leader>nt :NERDTreeToggle<CR>
 
 " NERD Commenter
 let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
 let g:NERDCreateDefaultMappings=0
 let g:NERDCommentWholeLinesInVMode=1
-let g:NERDTreeMapQuit='Q'
 
 map <leader>cc  <plug>NERDCommenterToggle
 map <leader>lc <plug>NERDCommenterAlignLeft
 map <leader>uc <plug>NERDCommenterUncomment
 
 " GitGutter mapping
-nmap <leader>f <plug>GitGutterNextHunk
-nmap <leader>b <plug>GitGutterPrevHunk
+nmap <leader>f <plug>(GitGutterNextHunk)
+nmap <leader>b <plug>(GitGutterPrevHunk)
 nmap <leader>gg :GitGutterBufferToggle<CR>
 
 " Auto formatting
