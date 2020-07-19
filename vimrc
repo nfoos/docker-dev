@@ -21,6 +21,8 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'elixir-editors/vim-elixir'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " Plugin 'vim-airline/vim-airline'
 " Plugin 'vim-perl/vim-perl'
@@ -36,10 +38,20 @@ call vundle#end()
 "
 " see :h vundle for more details or wiki for FAQ
 
+" Search
+" ======
+" ,o - open file with fzf
+" ,s - search with ripgrep and fzf
+
 " Navigate tabs
 " =============
-" <Ctrl-h> - previous
-" <Ctrl-l> - next
+" H - previous
+" L - next
+" < - move left
+" > - move right
+" ,# - switch to tab #1-9
+" ,tn - open new tab
+" ,to - make only tab
 
 " GitGutter
 " =============
@@ -185,6 +197,10 @@ autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 nmap j gj
 nmap k gk
 
+" fuzzy finder fzf
+nnoremap <leader>o :Files 
+nnoremap <leader>s :Rg 
+
 " Smart way to move between windows
 " map <C-j> <C-W>j
 " map <C-k> <C-W>k
@@ -213,6 +229,8 @@ nmap k gk
 " imap <C-l> <esc>:tabnext<CR>
 nnoremap H gT
 nnoremap L gt
+nnoremap <silent> < :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> > :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 nnoremap <leader>1 1gt
 nnoremap <leader>2 2gt
 nnoremap <leader>3 3gt
@@ -223,6 +241,7 @@ nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
 map <leader>tn :tabnew<space>
+map <leader>to :tabo<cr>
 
 " dont use Q for Ex mode
 nnoremap Q :q

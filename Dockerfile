@@ -5,6 +5,9 @@ RUN set -ex && \
 	apk upgrade && \
 	apk add --no-cache \
 		ack \
+		fd \
+		ripgrep \
+		fzf \
 		git \
 		nodejs \
 		python3 \
@@ -57,6 +60,8 @@ COPY git-hooks git-hooks/
 COPY vim vim/
 RUN chown -R $USER:$USER /opt/dev
 USER $USER
+
+ENV FZF_DEFAULT_COMMAND='fd --type f'
 
 ENV VIMINIT ":source /opt/dev/vimrc"
 ENV MYVIMRTP /opt/dev/vim
