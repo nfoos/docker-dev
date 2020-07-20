@@ -1,4 +1,10 @@
 [core]
-        editor = vim
-        excludesfile = /opt/dev/gitignore
-        hookspath = /opt/dev/git-hooks
+editor = vim
+excludesfile = /opt/dev/gitignore
+hookspath = /opt/dev/git-hooks
+
+[color]
+ui = always
+
+[include]
+path = ~/.gitconfig.dev

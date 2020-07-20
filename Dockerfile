@@ -47,6 +47,7 @@ ARG GID=1000
 ENV USER dev
 ENV HOME /home/$USER
 WORKDIR $HOME
+COPY gitconfig .gitconfig
 
 RUN set -ex && \
 	addgroup -g $GID $USER && \
@@ -55,7 +56,7 @@ RUN set -ex && \
 
 
 WORKDIR /opt/dev
-COPY gitconfig gitignore perltidyrc rubocop.yml vimrc ./
+COPY gitignore perltidyrc rubocop.yml vimrc ./
 COPY git-hooks git-hooks/
 COPY vim vim/
 RUN chown -R $USER:$USER /opt/dev
