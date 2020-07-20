@@ -8,6 +8,7 @@ RUN set -ex && \
 		fd \
 		ripgrep \
 		fzf \
+		less \
 		git \
 		nodejs \
 		python3 \
