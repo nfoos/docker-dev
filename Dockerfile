@@ -47,6 +47,7 @@ ARG GID=1000
 ENV USER dev
 ENV HOME /home/$USER
 WORKDIR $HOME
+COPY profile .profile
 COPY gitconfig .gitconfig
 
 RUN set -ex && \

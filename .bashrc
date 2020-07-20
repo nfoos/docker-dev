@@ -17,7 +17,7 @@ dev()
     then
       docker exec -it -w ${PWD#$HOME} docker-dev /bin/ash --login
     else
-      docker run -it --rm -d --net="host" -h docker-dev -v ~/src:/src -v home:/home/dev -w ${PWD#$HOME} --name docker-dev docker-dev && dev
+      docker run -it --rm -d --net="host" -h docker-dev -v ~/src:/src -v ~/.gitconfig.dev:/home/dev/.gitconfig.dev -w ${PWD#$HOME} --name docker-dev docker-dev && dev
     fi
 }
 
