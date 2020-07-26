@@ -23,8 +23,6 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-
-" Plugin 'vim-airline/vim-airline'
 " Plugin 'vim-perl/vim-perl'
 
 call vundle#end()
@@ -240,8 +238,8 @@ nnoremap <leader>6 6gt
 nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
-map <leader>tn :tabnew<space>
-map <leader>to :tabo<cr>
+nnoremap <leader>tn :tabnew<space>
+nnoremap <leader>to :tabo<cr>
 
 " dont use Q for Ex mode
 nnoremap Q :q
@@ -294,16 +292,17 @@ nmap <leader>nt :NERDTreeToggle<CR>
 " NERD Commenter
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
-let g:NERDCreateDefaultMappings=0
-let g:NERDCommentWholeLinesInVMode=1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCreateDefaultMappings = 0
+let g:NERDCommentWholeLinesInVMode = 1
 
 map <leader>cc  <plug>NERDCommenterToggle
-map <leader>lc <plug>NERDCommenterAlignLeft
-map <leader>uc <plug>NERDCommenterUncomment
+" map <leader>cl <plug>NERDCommenterAlignLeft
+" map <leader>cu <plug>NERDCommenterUncomment
 
 " GitGutter mapping
-nmap <leader>f <plug>(GitGutterNextHunk)
-nmap <leader>b <plug>(GitGutterPrevHunk)
+nmap <leader>gf <plug>(GitGutterNextHunk)
+nmap <leader>gb <plug>(GitGutterPrevHunk)
 nmap <leader>gg :GitGutterBufferToggle<CR>
 
 " Auto formatting
