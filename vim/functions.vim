@@ -21,8 +21,7 @@ function! MyTabLine()
   endwhile
 
   let s .= '%T%#TabLineFill#%T'
-  " let s .= '%T%#TabLineFill#%='
-  " let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+
   return s
 endfunction
 
@@ -46,22 +45,11 @@ function MyTabLabel(n)
       let name = substitute(name, '.*\/\ze.', '', '')
     endif
 
+  elseif name =~ 'NERD_tree'
+    let name = '[NT]'
+
   else
-    if name =~ 'NERD_tree'
-      let name = '[NT]'
-
-    elseif tabpagenr('$') > 15
-      let name = '[' . fnamemodify(name, ':e') . ']'
-
-    elseif tabpagenr('$') > 10
-      let name = fnamemodify(name, ':t')[-10:]
-
-    elseif tabpagenr('$') > 5
-      let name = fnamemodify(name, ':t')
-
-    else
-      let name = pathshorten(fnamemodify(name, ':p:~:.'))
-    endif
+    let name = pathshorten(fnamemodify(name, ':p:~:.'))
   endif
 
   if name == ''
@@ -72,7 +60,8 @@ function MyTabLabel(n)
     let name = '+' . name
   endif
 
-  let label .= name
+  let max_len = (&columns / tabpagenr('$')) - 5
+  let label .= name[-max_len:]
 
   return label
 endfunction
