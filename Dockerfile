@@ -61,8 +61,15 @@ WORKDIR /opt/dev
 COPY gitignore perltidyrc rubocop.yml vimrc ./
 COPY git-hooks git-hooks/
 COPY vim vim/
+COPY phx_formatter phx_formatter/
 RUN chown -R $USER:$USER /opt/dev
 USER $USER
+
+ENV MIX_DEPS_PATH=/opt/dev/phx_formatter/deps
+RUN set -ex && \
+	mix local.hex --force && \
+	mix local.rebar --force && \
+	MIX_EXS=/opt/dev/phx_formatter/mix.exs mix deps.get
 
 ENV FZF_DEFAULT_COMMAND='fd --type f'
 
