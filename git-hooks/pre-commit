@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+CACHED=$(git diff --name-only --cached)
+if [ -z "$CACHED" ]; then
+  exit 0
+fi
+
+RESULT=0
+
+STASH_NAME="pre-commit-$(date +%s)"
+git stash save -q --keep-index $STASH_NAME
+
+mix format --check-formatted $CACHED
+RESULT=$(($RESULT + $?))
+
+git stash list -n1 | grep "$STASH_NAME"
+if [ $? -eq 0 ]; then
+  git stash pop -q
+fi
+
+[ $RESULT -ne 0 ] && exit 1
+exit 0
