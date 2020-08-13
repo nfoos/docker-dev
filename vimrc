@@ -308,7 +308,7 @@ nmap <leader>gg :GitGutterBufferToggle<CR>
 " Auto formatting
 noremap <leader>tt :Autoformat<CR>
 let g:formatters_eruby = ['htmlbeautifier']
-let g:formatters_ruby = ['prettier', 'rubocop', 'rbeautify']
+let g:formatters_ruby = ['rubocop', 'rbeautify', 'prettier']
 let g:formatters_javascript = ['prettier', 'eslint_local', 'jsbeautify_javascript', 'jscs', 'standard_javascript', 'xo_javascript']
 
 let g:formatdef_htmlbeautifier = '"htmlbeautifier -b1"'

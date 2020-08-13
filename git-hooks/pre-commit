@@ -10,8 +10,15 @@ RESULT=0
 STASH_NAME="pre-commit-$(date +%s)"
 git stash save -q --keep-index $STASH_NAME
 
-mix format --check-formatted $CACHED
-RESULT=$(($RESULT + $?))
+if [ -f "mix.exs" ]; then
+  mix format --check-formatted $CACHED
+  RESULT=$(($RESULT + $?))
+fi
+
+# if [ -f "Gemfile" ]; then
+#   rubocop -c /opt/dev/rubocop.yml $CACHED
+#   RESULT=$(($RESULT + $?))
+# fi
 
 git stash list -n1 | grep "$STASH_NAME"
 if [ $? -eq 0 ]; then

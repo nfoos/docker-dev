@@ -57,7 +57,7 @@ function MyTabLabel(n)
   endif
 
   if getbufvar(bufnr, '&modified')
-    let name = '+' . name
+    let name .= '+'
   endif
 
   let max_len = (&columns / tabpagenr('$')) - 5

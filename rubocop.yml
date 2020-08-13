@@ -7,7 +7,7 @@ AllCops:
     - "vendor/**/*"
   TargetRubyVersion: 2.4
 
-Lint/UnneededCopDisableDirective:
+Lint/RedundantCopDisableDirective:
   Enabled: No
 
 Style/IfUnlessModifier:
@@ -25,7 +25,7 @@ Style/SymbolArray:
 Style/WordArray:
   Enabled: No
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Metrics/MethodLength:
